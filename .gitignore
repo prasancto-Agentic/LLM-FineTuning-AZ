@@ -1,37 +1,317 @@
-# Local .terraform directories
-.terraform/
+# ========================================================================================
+# GenAI ML Platform - .gitignore
+# ========================================================================================
 
-# .tfstate files
+# ------------------------
+# OS / Editor junk
+# ------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+*~
+
+# ------------------------
+# Python / Azure Functions (Python)
+# ------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+.env
+.venv
+venv/
+ENV/
+env.bak/
+.python_packages/
+.local/
+pytest_cache/
+.ipynb_checkpoints/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+
+# If using Poetry
+.poetry/
+
+# ------------------------
+# Node / Azure Functions (Node) – optional, safe to keep
+# ------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+package-lock.json
+# (if you want lockfiles committed, remove the above)
+
+# ------------------------
+# Terraform (infra/)
+# ------------------------
+**/.terraform/
 *.tfstate
 *.tfstate.*
-
-# Crash log files
 crash.log
 crash.*.log
-
-# Exclude all .tfvars files, which are likely to contain sensitive data, such as
-# password, private keys, and other secrets. These should not be part of version 
-# control as they are data points which are potentially sensitive and subject 
-# to change depending on the environment.
 *.tfvars
 *.tfvars.json
-
-# Ignore override files as they are usually used to override resources locally and so
-# are not checked in
 override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
-
-# Ignore transient lock info files created by terraform apply
-.terraform.tfstate.lock.info
-
-# Include override files you do wish to add to version control using negated pattern
-# !example_override.tf
-
-# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
-# example: *tfplan*
-
-# Ignore CLI configuration files
 .terraformrc
 terraform.rc
+.terraform.lock.hcl
+
+# ------------------------
+# Azure Functions (app/)
+# ------------------------
+local.settings.json
+.funcignore
+bin/
+obj/
+.azure/
+azure-functions-core-tools/
+
+# ------------------------
+# Machine Learning (ml/)
+# ------------------------
+# Model artifacts (should be in model registry, not git)
+ml/models/*.pkl
+ml/models/*.joblib
+ml/models/*.model
+ml/models/*.bin
+ml/models/*.onnx
+ml/models/*.pt
+ml/models/*.pth
+ml/models/*.h5
+ml/models/*.pb
+
+# Training outputs and local runs
+ml/training/.outputs/
+ml/training/.aml_runs/
+ml/training/outputs/
+ml/training/logs/
+ml/model-registry/local_models/
+aml_logs/
+checkpoints/
+runs/
+mlruns/
+.mlflow/
+
+# Data files (should be in storage, not git)
+*.csv
+*.json
+*.jsonl
+*.parquet
+*.avro
+*.tsv
+*.xlsx
+*.xls
+data/
+datasets/
+ml/data/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# ------------------------
+# Configuration (configs/)
+# ------------------------
+# Sensitive configuration files
+configs/app/secrets.json
+configs/app/local.json
+configs/app/*.secrets.*
+configs/*/credentials.*
+configs/*/.env*
+
+# Environment-specific overrides
+configs/app/dev.override.json
+configs/app/prod.override.json
+configs/app/uat.override.json
+
+# ------------------------
+# CI/CD (ci-cd/)
+# ------------------------
+.azure-pipelines.yml.user
+.github-token
+ci-cd/github-actions/secrets/
+ci-cd/ado/secrets/
+ci-cd/*/temp/
+.ado/
+.github/secrets/
+
+# ------------------------
+# Documentation (docs/)
+# ------------------------
+docs/.build/
+docs/_build/
+docs/site/
+*.html
+# Keep markdown files but exclude generated ones
+docs/generated/
+
+# ------------------------
+# Logs / Temp files
+# ------------------------
+logs/
+*.log
+tmp/
+temp/
+*.tmp
+.cache/
+
+# ------------------------
+# Build / Dist (if any future packaging)
+# ------------------------
+dist/
+build/
+out/
+
+# ------------------------
+# Secrets and Credentials (ALL DIRECTORIES)
+# ------------------------
+*.key
+*.pem
+*.pfx
+*.p12
+credentials.json
+secrets.json
+.secret
+.secrets/
+**/*secret*
+**/*credential*
+**/*password*
+**/*token*
+
+# ------------------------
+# Azure-specific
+# ------------------------
+.azure/
+*.publishsettings
+*.pubxml
+*.azurePubxml
+
+# ------------------------
+# API Management (configs/apim/)
+# ------------------------
+configs/apim/*.secret.xml
+configs/apim/local/
+
+# ------------------------
+# CosmosDB (if local emulator used)
+# ------------------------
+.cosmos-emulator/
+
+# ------------------------
+# Monitoring and Debugging
+# ------------------------
+*.dmp
+*.stackdump
+core.*
+debug.log
+trace.log
+
+# ------------------------
+# Backup files
+# ------------------------
+*.bak
+*.backup
+*.orig
+
+# ------------------------
+# Compressed files (unless specifically needed)
+# ------------------------
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# ------------------------
+# IDE specific files
+# ------------------------
+# JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+.vscode/tasks.json
+# Keep the directory but ignore user-specific files
+
+# Visual Studio
+*.suo
+*.user
+*.sln.docstates
+[Dd]ebug/
+[Rr]elease/
+.vs/
+
+# ------------------------
+# Testing
+# ------------------------
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# ------------------------
+# Documentation generators
+# ------------------------
+docs/_build/
+docs/.doctrees/
+.sphinx/
+
+# ------------------------
+# Environment variables (project-wide)
+# ------------------------
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
+.env.uat
+
+# ------------------------
+# Platform-specific ignores
+# ------------------------
+# Keep important configuration templates but ignore filled versions
+configs/*/template.*
+!configs/*/template.example.*
+
+# Keep schema files but ignore generated ones
+!configs/schema/*.json
+configs/schema/generated/
+
+# Keep CI/CD templates
+!ci-cd/**/template.*
+!ci-cd/**/*.template.*
+ci-cd/**/generated/
+
+# Keep documentation templates
+!docs/template.*
+!docs/templates/
+docs/generated/
+
+# ------------------------
+# Custom project ignores (add your specific needs here)
+# ------------------------
+# Add any project-specific patterns below
