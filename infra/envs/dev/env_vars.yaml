@@ -1,0 +1,12 @@
+environment: dev
+location: eastus
+resource_prefix: dev-llm-ft
+resource_group_name: dev-llm-ft-rg
+key_vault_name: dev-llm-ft-kv
+log_analytics_workspace_name: dev-llm-ft-law
+
+tags:
+  Environment: Development
+  Project: LLM-FT
+  ManagedBy: Terraform
+  Owner: ""  # Add your name or team name here
