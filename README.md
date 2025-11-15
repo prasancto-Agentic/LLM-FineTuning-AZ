@@ -74,25 +74,19 @@ python3 -m venv .venv --prompt "Az-SFT"
 
 ```mermaid
 flowchart LR
-    %% ===========================
-    %% TRAINING PATH
-    %% ===========================
-    subgraph TRAINING[Training Path]
-        D[Training Data<br/>(Blob Storage / ml/training/data)] --> J[Azure ML<br/>Training Job]
-        J --> MR[Azure ML<br/>Model Registry]
-        MR --> DEP[Deploy Online Endpoint<br/>(Azure ML Endpoint)]
+    subgraph Training
+        D["Data"] --> J["Azure ML Training Job"]
+        J --> MR["Model Registry"]
+        MR --> DEP["Online Endpoint"]
     end
 
-    %% ===========================
-    %% INFERENCE PATH
-    %% ===========================
-    subgraph INFERENCE[Inference Path]
-        C[Client / Frontend / API Consumer] --> APIM[API Management]
-        APIM --> FUNC[Azure Function<br/>(Orchestrator)]
-        FUNC --> EP[Azure ML Online Endpoint]
-        EP --> COSMOS[Cosmos DB<br/>(Tokens, Cost, Metadata)]
-        COSMOS --> LA[Log Analytics / Monitor]
-        EP --> RSP[Response Back<br/>to Client]
+    subgraph Inference
+        C["Client"] --> APIM["APIM"]
+        APIM --> FUNC["Function App"]
+        FUNC --> EP["AML Endpoint"]
+        EP --> COSMOS["Cosmos DB"]
+        COSMOS --> LA["Log Analytics"]
+        EP --> RSP["Response"]
     end
 ```
 
